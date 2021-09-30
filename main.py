@@ -1,12 +1,10 @@
 # Author: Timothy P. McCrary
 
-from io import TextIOWrapper
-from typing import List
+from typing import Dict, List
 from argparse import ArgumentParser
+import time
 
-import pymp
-
-from map_reduce.file_read_helper import FileReadHelper
+from map_reduce.file_handler import FileHandler
 
 
 
@@ -24,16 +22,26 @@ def main():
     thread_count: bool = args.threads
     directory_name: str = args.directory
 
-    shakespeare_filenames: List[str] = FileReadHelper.get_all_file_names_in_directory(directory_name)
+    # List of words we will be searchinf for in the shakespeare files.
+    word_list: List[str] = ["hate", "love", "death", "night", "sleep", "time", "henry", "hamlet", "you", "my", "blood", "poison", "macbeth", "king", "heart", "honest"]
 
-    open_files: List[TextIOWrapper] = FileReadHelper.open_files(shakespeare_filenames, directory_name)
+    # Get a list of the shakespeare file names.
+    shakespeare_filenames: List[str] = FileHandler.get_all_filenames_in_directory(directory_name)
 
-    print(open_files)
+    startTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+    # Perform map reduce on files to get word count.
+    word_count: Dict[str, int] = FileHandler.map_reduce(shakespeare_filenames, word_list, thread_count)
+    endTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+    elapsedTime: float = endTime - startTime
+
+    print(f"\nWord Count: \n{word_count}\n")
+    print(f"Duration: {elapsedTime}s")
+
+
+
+
 
     
-
-    
-    pass
 
 if __name__ == '__main__':
     main()
