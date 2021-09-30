@@ -5,6 +5,7 @@ from io import TextIOWrapper
 import os
 from typing import Dict, List
 import pymp
+import time
 
 
 class FileHandler:
@@ -54,13 +55,17 @@ class FileHandler:
 
             # For each file, we brak up the work using pymps iterate. Each thread will get a file, and as work becomes available, a thread will take it.
             for filename in p.iterate(filenames):
-                p.print(f"Thread {p.thread_num} handling {filename}")
+                # p.print(f"Thread {p.thread_num} handling {filename}")
+                startTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
                 # Open the file given its name.
                 open_file: TextIOWrapper = open(filename, "r")
 
                 # Read the filing, turning it into a string, and make that string lowercase.
                 file_text: str = open_file.read().lower()
+
+                # Close open file
+                open_file.close()
 
                 # Get the word count.
                 nonshared_word_count = FileHandler.get_word_count(file_text, word_list)
@@ -72,6 +77,10 @@ class FileHandler:
                     else:
                         shared_word_count[word] = nonshared_word_count[word]
                 p.lock.release()
+
+                endTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+                elapsedTime: float = endTime - startTime
+                p.print(f"Thread {p.thread_num} took {elapsedTime}s to read {filename} and count words.")
         
         return shared_word_count
 

@@ -35,7 +35,7 @@ def main():
     elapsedTime: float = endTime - startTime
 
     print(f"\nWord Count: \n{word_count}\n")
-    print(f"Duration: {elapsedTime}s")
+    print(f"Total program duration: {elapsedTime}s")
 
 
 
