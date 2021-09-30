@@ -1,3 +1,51 @@
+### Timothy P. McCrary
+
+# Parallel-Computing-MapReduce
+
+
+### IMPORTANT: Report can be found at bottom of README.
+
+## Installation
+
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install `pymp`.
+
+```bash
+pip install pymp-pypi
+```
+
+## Usage
+
+This program uses a CLI (commnad line interface) to recieve user input.<br/><br/>
+Use the following commands in the root folder of the program.<br/>
+For CLI help:
+```bash
+python3 main.py -h
+```
+Outputting:
+```
+
+```
+### Example Usage:
+```bash
+python3 main.py -t 4
+```
+
+# Report
+#### Problems
+
+#### Time to Complete
+
+#### Performance Measurements
+
+#### Analysis
+
+#### CPU Info
+```
+model name	: AMD Ryzen 7 5800H with Radeon Graphics
+     16     160     832
+```
+
+
 # Parallel-Computing-MapReduce
 For this assignment you will write a parallel map reduce program. The program will search for a set 
 of words among a set of documents that constitute the works of Shakespeare. The set of words is listed 
