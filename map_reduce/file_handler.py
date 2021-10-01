@@ -55,8 +55,7 @@ class FileHandler:
 
             # For each file, we brak up the work using pymps iterate. Each thread will get a file, and as work becomes available, a thread will take it.
             for filename in p.iterate(filenames):
-                # p.print(f"Thread {p.thread_num} handling {filename}")
-                startTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+                startTime: float = time.clock_gettime(time.CLOCK_MONOTONIC)
 
                 # Open the file given its name.
                 open_file: TextIOWrapper = open(filename, "r")
@@ -78,9 +77,9 @@ class FileHandler:
                         shared_word_count[word] = nonshared_word_count[word]
                 p.lock.release()
 
-                endTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+                endTime: float = time.clock_gettime(time.CLOCK_MONOTONIC)
                 elapsedTime: float = endTime - startTime
-                p.print(f"Thread {p.thread_num} took {elapsedTime}s to read {filename} and count words.")
+                p.print(f"Thread {p.thread_num} duration: {elapsedTime}s to read {filename} and count words.")
         
         return shared_word_count
 

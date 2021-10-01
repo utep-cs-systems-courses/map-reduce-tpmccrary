@@ -28,10 +28,12 @@ def main():
     # Get a list of the shakespeare file names.
     shakespeare_filenames: List[str] = FileHandler.get_all_filenames_in_directory(directory_name)
 
-    startTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+    startTime: float = time.clock_gettime(time.CLOCK_MONOTONIC)
+
     # Perform map reduce on files to get word count.
     word_count: Dict[str, int] = FileHandler.map_reduce(shakespeare_filenames, word_list, thread_count)
-    endTime: float = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+    
+    endTime: float = time.clock_gettime(time.CLOCK_MONOTONIC)
     elapsedTime: float = endTime - startTime
 
     print(f"\nWord Count: \n{word_count}\n")
