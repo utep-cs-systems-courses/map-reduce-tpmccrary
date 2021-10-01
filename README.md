@@ -1,9 +1,9 @@
 ### Timothy P. McCrary
 
 # Parallel-Computing-MapReduce
-This program searches and counts eight .txt files (containing Shakespeare text) for these words: `[hate, love, death, night, sleep, time, henry, hamlet, you, my, blood, poison, macbeth, king, heart, honest]`</br>
+This program searches eight .txt files, containing Shakespeare text, and counts the number of times these words appear: `[hate, love, death, night, sleep, time, henry, hamlet, you, my, blood, poison, macbeth, king, heart, honest]`</br>
 It is important to note, this program uses a map reduce model.</br>
-The logic is that each thread gets its own file, counts the words in that file, and then finally updates a shared dictionary amonst the threads.
+The main logic of this program is as follows: each thread gets its own file, counts the words in that file, and then finally updates a shared dictionary amonst the threads.
 
 
 ### IMPORTANT: Report can be found at bottom of README.
@@ -45,8 +45,8 @@ This will start the program and have it run on 4 threads.
 
 # Report
 #### Problems
-During this assignment I came across one problem. Initially, I tried opening all the files and stoting them in a list of type: `List[TextIOWrapper]`. Then, I would use the pymp `iterate()` function to iterate over the list and distrubt the work. However, for some reason, pymp could not iterate over a list of type `TextIOWrapper` and would just hang. I could not figure out why this was happening, but to solve this I instead iterated over a list of type: `List[str]`. This list held all the names of the .txt files. Therefore, the threads would get assigned a file name and they would open the file once the work was distributed and not before.</br>
-That being, the program is 100% working, and all words are found in the files.
+During this assignment I came across one problem. Initially, I tried opening all the files and storing them in a list of type: `List[TextIOWrapper]`. Then, I would use the pymp `iterate()` function to iterate over the list and distrubt the work. However, for some reason, pymp could not iterate over a list of type `TextIOWrapper` and would just hang. I could not figure out why this was happening, but to solve this I instead iterated over a list of type: `List[str]`. This list held all the names of the .txt files. Therefore, the threads would get assigned a file name and they would open the file once the work was distributed and not before.</br>
+That being said, the program is 100% working, and all words are found in the files.
 #### Time to Complete
 This assignment took me around 6-8 hours to complete, including the write up. The aspect that took the longest was coding the logic for the parallel section and how the words should be counted. Initially, I was looking for the exact word match, until I realize I needed to ignore case, along with abbrevitions and punctuations. After realizing this, I was able to get the correct word count.
 #### Performance Measurements
@@ -59,7 +59,7 @@ This program was ran on 1, 2, 4, and 8 threads:
 ```
 #### Analysis
 This algorithm provided some strange (and non-consistent) results. Initially when I wrote the program, 4 threads seemed to be the sweet spot, and 8 made it slower. With the results here, 1 thread is of course slow, and 2 threads is slower. Then, 4 threads goes back to being faster, and finally 8 threads being the fastest.</br>
-Best conclusion is that this is just not totally consistent, and seems to depend on the machine and what parts of memory are available.</br>
+My best conclusion is that this is just not totally consistent, and seems to depend on the machine and what parts of memory are available.</br>
 Additionally, I did try optimizing the algorithm. Specifically, by iterating over a list of strings, containing all the text. However, this turned out to be slower! Therefore, the algorithm was not altered and each thread gets its own file to open, search, and then report to a shared variable.
 #### CPU Info
 ```
