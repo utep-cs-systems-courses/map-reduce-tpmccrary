@@ -1,6 +1,8 @@
 ### Timothy P. McCrary
 
 # Parallel-Computing-MapReduce
+This program searches and counts eight .txt files (containing Shakespeare text) for these words: `[hate, love, death, night, sleep, time, henry, hamlet, you, my, blood, poison, macbeth, king, heart, honest]`</br>
+It is important to note, this program uses a map reduce model.
 
 
 ### IMPORTANT: Report can be found at bottom of README.
@@ -23,20 +25,34 @@ python3 main.py -h
 ```
 Outputting:
 ```
+usage: main.py [-h] [-t THREADS] [-d DIRECTORY]
 
+Perfom parallel word counting on files.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t THREADS, --threads THREADS
+                        (int, optional) Number of threads to use in parallel.
+  -d DIRECTORY, --directory DIRECTORY
+                        (str, optional) At project root, directory name to files that will be searched.
 ```
 ### Example Usage:
 ```bash
 python3 main.py -t 4
 ```
+This will start the program and have it run on 4 threads.
 
 # Report
 #### Problems
-
+During this assignment I came across one problem. Initially, I tried opening all the files and stoting them in a list of type: `List[TextIOWrapper]`. Then, I would use the pymp `iterate()` function to iterate over the list and distrubt the work. However, for some reason, pymp could not iterate over a list of type `TextIOWrapper` and would just hang. I could not figure out why this was happening, but to solve this I instead iterated over a list of type: `List[str]`. This list held all the names of the .txt files. Therefore, the threads would get assigned a file name and they would open the file once the work was distributed and not before.</br>
+That being, the program is 100% working, and all words are found in the files.
 #### Time to Complete
-
+This assignment took me around 6-8 hours to complete, including the write up. The aspect that took the longest was coding the logic for the parallel section and how the words should be counted. Initially, I was looking for the exact word match, until I realize I needed to ignore case, along with abbrevitions and punctuations. After realizing this, I was able to get the correct word count.
 #### Performance Measurements
-
+This program was ran on 1, 2, 4, and 8 threads. This algorithm provided some interesting results:
+```
+Total program duration: 0.27941689899989797s
+```
 #### Analysis
 
 #### CPU Info
