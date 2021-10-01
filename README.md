@@ -2,7 +2,8 @@
 
 # Parallel-Computing-MapReduce
 This program searches and counts eight .txt files (containing Shakespeare text) for these words: `[hate, love, death, night, sleep, time, henry, hamlet, you, my, blood, poison, macbeth, king, heart, honest]`</br>
-It is important to note, this program uses a map reduce model.
+It is important to note, this program uses a map reduce model.</br>
+The logic is that each thread gets its own file, counts the words in that file, and then finally updates a shared dictionary amonst the threads.
 
 
 ### IMPORTANT: Report can be found at bottom of README.
@@ -49,12 +50,17 @@ That being, the program is 100% working, and all words are found in the files.
 #### Time to Complete
 This assignment took me around 6-8 hours to complete, including the write up. The aspect that took the longest was coding the logic for the parallel section and how the words should be counted. Initially, I was looking for the exact word match, until I realize I needed to ignore case, along with abbrevitions and punctuations. After realizing this, I was able to get the correct word count.
 #### Performance Measurements
-This program was ran on 1, 2, 4, and 8 threads. This algorithm provided some interesting results:
+This program was ran on 1, 2, 4, and 8 threads:
 ```
-Total program duration: 0.27941689899989797s
+1 Thread Duration: 0.27941689899989797s
+2 Thread Duration: 0.2869608490000246s
+4 Thread Duration: 0.22721178000006148s
+8 Thread Duration: 0.16655839899999592s
 ```
 #### Analysis
-
+This algorithm provided some strange (and non-consistent) results. Initially when I wrote the program, 4 threads seemed to be the sweet spot, and 8 made it slower. With the results here, 1 thread is of course slow, and 2 threads is slower. Then, 4 threads goes back to being faster, and finally 8 threads being the fastest.</br>
+Best conclusion is that this is just not totally consistent, and seems to depend on the machine and what parts of memory are available.</br>
+Additionally, I did try optimizing the algorithm. Specifically, by iterating over a list of strings, containing all the text. However, this turned out to be slower! Therefore, the algorithm was not altered and each thread gets its own file to open, search, and then report to a shared variable.
 #### CPU Info
 ```
 model name	: AMD Ryzen 7 5800H with Radeon Graphics
